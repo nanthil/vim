@@ -78,7 +78,6 @@ colorscheme hybrid_reverse 	"default color scheme
 "--------------VIM Macros------------"
 "------------------------------------"
 nnoremap <F3> :set hlsearch!<CR>
-
 "------------------------------------"
 "----------Javascript Macros---------"
 "------------------------------------"
