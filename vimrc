@@ -84,11 +84,9 @@ nnoremap <F3> :set hlsearch!<CR>
 "------------------------------------"
 map <leader>af i$scope. = function(){}<esc>i<CR><CR><esc>kkwli
 map <leader>ac i.controller('', function($scope){}<esc>i<CR><CR><esc>kki
-
 map <leader>func ifunction (){}<esc>i<CR><CR><esc>kkwi
 map <leader>v ivar  = ;<esc>2bi
 map <leader>f $<CR>ifor (var i = 0; i < .length; i++) {}<esc>i<CR><CR><esc>kk9wi
-
 "------------------------------------"
 "----------Javascript Folding--------"
 "------------------------------------"
