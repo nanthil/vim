@@ -24,15 +24,25 @@ namespace vimbackupscript2
                 //Get lates write time to see if it is out of sync 
                 //(accounts for when program is not running)
                 DateTime mostRecentSave = File.GetLastWriteTimeUtc(watcher.Path + "\\vimrc");
-                string logPath = "C:\\Users\\nathan.rogers\\vimbackup\\log.csv";
-                var logFile = File.ReadAllText(logPath).Split(',');
+                string logPath = "C:\\Users\\nathan.rogers\\vim\\log.csv";
+
+                List<string> logFile = new List<string>();
+                try
+                {
+                    logFile = File.ReadAllText(logPath).Split(',').ToList();
+                }
+                catch (Exception e)
+                {
+                    //send an email perhaps
+                    //or do some other stuff
+                }
                 DateTime latestLog = new DateTime();
 
                 //Create a time range for comparison
                 //This is what keeps files from writing when they are up to date
                 DateTime start = new DateTime(mostRecentSave.Year, mostRecentSave.Month, mostRecentSave.Day, mostRecentSave.Hour, mostRecentSave.Minute - 1, 0);
                 DateTime end = new DateTime(mostRecentSave.Year, mostRecentSave.Month, mostRecentSave.Day, mostRecentSave.Hour, mostRecentSave.Minute + 1, 0);
-                DateTime.TryParse(logFile[logFile.Length - 1], out latestLog);
+                DateTime.TryParse(logFile[logFile.Count - 1], out latestLog);
 
                 //Write file if out of sync
                 if (latestLog > start && latestLog < end)
@@ -51,7 +61,7 @@ namespace vimbackupscript2
                 watcher.WaitForChanged(WatcherChangeTypes.All);
 
                 //Write to file
-                if (logFile.Length == 0)
+                if (logFile.Count == 0)
                 {
                     File.WriteAllText(logPath, mostRecentSave.ToString("g"));
                 }
@@ -67,7 +77,7 @@ namespace vimbackupscript2
             //write to log
             // Specify what is done when a file is changed, created, or deleted.
             Console.WriteLine("File: " + e.FullPath + " " + e.ChangeType);
-            string pathToCopyTo = "C:\\Users\\nathan.rogers\\vimbackup\\vimrc";
+            string pathToCopyTo = "C:\\Users\\nathan.rogers\\vim\\vimrc";
 
             File.Copy(e.FullPath, pathToCopyTo, true);
         }
